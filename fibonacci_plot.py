@@ -7,7 +7,7 @@ Each new number is the sum of the current and previous number.
 import matplotlib.pyplot as plt
 import numpy as np
 
-def generate_sequence(iterations=1_000_000):
+def generate_sequence(iterations=1_000):
     """
     Generate a Fibonacci-like sequence starting with 2.
     Each new number = current number + previous number.
@@ -34,9 +34,9 @@ def generate_sequence(iterations=1_000_000):
 
 def main():
     print("Generating Fibonacci-like sequence starting with 2...")
-    print("Running 1 million iterations...")
+    print("Running 1000 iterations...")
 
-    sequence = generate_sequence(1_000_000)
+    sequence = generate_sequence(1_000)
 
     print(f"Sequence generated with {len(sequence)} values")
     print(f"First 10 values: {sequence[:10]}")
