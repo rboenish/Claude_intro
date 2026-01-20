@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Space Invaders Game
+Space Invaders Game - Political Edition
 A classic arcade-style shooter game built with Pygame
+Featuring Zohran Mamdani vs. Political Opponents
 """
 
 import pygame
 import random
 import sys
+import os
 
 # Initialize Pygame
 pygame.init()
@@ -32,15 +34,47 @@ ENEMY_DROP = 30
 ENEMY_BULLET_SPEED = 4
 ENEMY_SHOOT_CHANCE = 0.001
 
+# Image paths
+IMAGE_DIR = "images"
+PLAYER_IMAGE = os.path.join(IMAGE_DIR, "zohran_mamdani.jpg")
+ENEMY_IMAGES = [
+    os.path.join(IMAGE_DIR, "andrew_cuomo.jpg"),
+    os.path.join(IMAGE_DIR, "donald_trump.jpg"),
+    os.path.join(IMAGE_DIR, "jd_vance.jpg")
+]
+
+
+def load_and_scale_image(image_path, width, height, fallback_color=None):
+    """Load an image and scale it, or create a colored surface if not found"""
+    try:
+        if os.path.exists(image_path):
+            image = pygame.image.load(image_path)
+            # Convert to surface with alpha
+            image = image.convert_alpha()
+            # Scale to desired size
+            image = pygame.transform.scale(image, (width, height))
+            return image, True
+    except Exception as e:
+        print(f"Could not load image {image_path}: {e}")
+
+    # Fallback to colored surface
+    surface = pygame.Surface((width, height))
+    if fallback_color:
+        surface.fill(fallback_color)
+    return surface, False
+
 
 class Player(pygame.sprite.Sprite):
-    """Player ship class"""
+    """Player ship class - Zohran Mamdani"""
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((50, 30))
-        self.image.fill(GREEN)
-        # Draw a simple ship shape
-        pygame.draw.polygon(self.image, WHITE, [(25, 0), (0, 30), (50, 30)])
+        # Try to load Zohran Mamdani's image
+        self.image, loaded = load_and_scale_image(PLAYER_IMAGE, 60, 60, GREEN)
+
+        if not loaded:
+            # Fallback: Draw a simple ship shape
+            pygame.draw.polygon(self.image, WHITE, [(30, 0), (0, 60), (60, 60)])
+
         self.rect = self.image.get_rect()
         self.rect.centerx = SCREEN_WIDTH // 2
         self.rect.bottom = SCREEN_HEIGHT - 10
@@ -60,15 +94,19 @@ class Player(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    """Enemy invader class"""
+    """Enemy invader class - Political opponents"""
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.Surface((40, 30))
-        self.image.fill(RED)
-        # Draw a simple invader shape
-        pygame.draw.rect(self.image, YELLOW, (5, 5, 30, 20))
-        pygame.draw.rect(self.image, RED, (10, 10, 5, 5))
-        pygame.draw.rect(self.image, RED, (25, 10, 5, 5))
+        # Randomly choose one of the enemy images
+        enemy_image_path = random.choice(ENEMY_IMAGES)
+        self.image, loaded = load_and_scale_image(enemy_image_path, 50, 50, RED)
+
+        if not loaded:
+            # Fallback: Draw a simple invader shape
+            pygame.draw.rect(self.image, YELLOW, (5, 5, 40, 40))
+            pygame.draw.rect(self.image, RED, (15, 15, 10, 10))
+            pygame.draw.rect(self.image, RED, (25, 15, 10, 10))
+
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -120,7 +158,7 @@ class Game:
     """Main game class"""
     def __init__(self):
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("Space Invaders")
+        pygame.display.set_caption("Space Invaders - Political Edition")
         self.clock = pygame.time.Clock()
         self.running = True
         self.game_over = False
@@ -270,12 +308,26 @@ class Game:
 
     def run(self):
         """Main game loop"""
-        print("Starting Space Invaders!")
+        print("=" * 60)
+        print("Space Invaders - Political Edition")
+        print("=" * 60)
+        print("Play as Zohran Mamdani defending against:")
+        print("  - Andrew Cuomo")
+        print("  - Donald Trump")
+        print("  - JD Vance")
+        print()
         print("Controls:")
-        print("  LEFT/RIGHT arrows - Move ship")
+        print("  LEFT/RIGHT arrows - Move")
         print("  SPACE - Shoot")
         print("  R - Restart (when game over)")
         print("  ESC - Quit")
+        print()
+        print("NOTE: Place images in the 'images/' directory:")
+        print("  - zohran_mamdani.jpg (player)")
+        print("  - andrew_cuomo.jpg (enemy)")
+        print("  - donald_trump.jpg (enemy)")
+        print("  - jd_vance.jpg (enemy)")
+        print("=" * 60)
         print()
 
         while self.running:
