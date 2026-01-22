@@ -1,6 +1,6 @@
-# Space Invaders - Political Edition
+# Space Invaders (Vaccine)- Political Edition
 
-A classic Space Invaders-style arcade shooter game built with Python and Pygame, featuring political figures!
+A classic Space Invaders-style arcade vaccine shooter game built with Python and Pygame, featuring political figures!
 
 **Play as Zohran Mamdani** (NYC Mayor) defending against:
 - Andrew Cuomo
@@ -11,7 +11,7 @@ A classic Space Invaders-style arcade shooter game built with Python and Pygame,
 
 - Player-controlled character (Zohran Mamdani) with smooth left/right movement
 - Grid formation of enemy invaders (5 rows x 10 columns) with randomized political opponent faces
-- Player shooting mechanics with cooldown
+- Player vaccine shooting mechanics with cooldown
 - Enemy movement (side-to-side with downward progression)
 - Random enemy shooting
 - Collision detection
